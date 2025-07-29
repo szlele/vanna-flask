@@ -6,9 +6,9 @@
 - 数据库服务：基于MySQL数据库服务
 - 向量数据库服务：基于Milvus向量数据库服务
 
-# 安装步骤
+## 安装使用
 
-## 配置`.env`
+### 配置`.env`
 ```
 # LLM模型配置
 OPENAI_LLM_MODEL=
@@ -33,12 +33,12 @@ MYSQL_USER=root
 MYSQL_PASSWORD=123456
 ```
 
-## 启动服务
+### 启动服务
 ```
 docker compose up -d
 ```
 
-## 访问服务
+### 访问服务
 ```
 http://localhost:8080
 ```
