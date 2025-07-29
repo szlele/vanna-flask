@@ -6,9 +6,9 @@
 - 数据库服务：基于MySQL数据库服务
 - 向量数据库服务：基于Milvus向量数据库服务
 
-# Setup
+# 安装步骤
 
-## 配置`.env`中的环境变量
+## 配置`.env`
 ```
 # LLM模型配置
 OPENAI_LLM_MODEL=
