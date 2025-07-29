@@ -3,10 +3,10 @@ services:
     image: quay.io/coreos/etcd:v3.5.5
     container_name: milvus-etcd
     environment:
-      - ETCD_AUTO_COMPACTION_MODE=revision
-      - ETCD_AUTO_COMPACTION_RETENTION=1000
-      - ETCD_QUOTA_BACKEND_BYTES=4294967296
-      - ETCD_SNAPSHOT_COUNT=50000
+      ETCD_AUTO_COMPACTION_MODE: 'revision'
+      ETCD_AUTO_COMPACTION_RETENTION: 1000
+      ETCD_QUOTA_BACKEND_BYTES: 4294967296
+      ETCD_SNAPSHOT_COUNT: 50000
     volumes:
       - ./volumes/milvus/etcd:/etcd
     command: etcd -advertise-client-urls=http://127.0.0.1:2379 -listen-client-urls http://0.0.0.0:2379 --data-dir /etcd
@@ -63,8 +63,8 @@ services:
       MYSQL_DATABASE: ${MYSQL_DATABASE:-vanna}
     volumes:
       - ./volumes/mysql:/var/lib/mysql
-    # ports:
-    #   - 3000:3306
+    ports:
+      - 3306:3306
     command: --max-connections=100
 
   app:
@@ -72,20 +72,20 @@ services:
     container_name: vanna-flask-server
     restart: always
     environment:
-      - OPENAI_LLM_MODEL: ${OPENAI_LLM_MODEL}
-      - OPENAI_LLM_API_KEY: ${OPENAI_LLM_API_KEY:-sk-}
-      - OPENAI_LLM_BASE_URL: ${OPENAI_LLM_BASE_URL}
-      - OPENAI_EMBEDDING_MODEL: ${OPENAI_EMBEDDING_MODEL}
-      - OPENAI_EMBEDDING_API_KEY: ${OPENAI_EMBEDDING_API_KEY:-sk-}
-      - OPENAI_EMBEDDING_BASE_URL: ${OPENAI_EMBEDDING_BASE_URL}
-      - MILVUS_URI: ${MILVUS_URI:-milvus:19530}
-      - MILVUS_USER: ${MILVUS_USER:-admin}
-      - MILVUS_PASSWORD: ${MILVUS_PASSWORD:-123456}
-      - MYSQL_HOST: ${MYSQL_HOST:-mysql}
-      - MYSQL_PORT: ${MYSQL_PORT:-3306}
-      - MYSQL_DBNAME: ${MYSQL_DBNAME:-vanna}
-      - MYSQL_USER: ${MYSQL_USER:-root}
-      - MYSQL_PASSWORD: ${MYSQL_PASSWORD:-123456}
+      OPENAI_LLM_MODEL: ${OPENAI_LLM_MODEL}
+      OPENAI_LLM_API_KEY: ${OPENAI_LLM_API_KEY:-sk-}
+      OPENAI_LLM_BASE_URL: ${OPENAI_LLM_BASE_URL}
+      OPENAI_EMBEDDING_MODEL: ${OPENAI_EMBEDDING_MODEL}
+      OPENAI_EMBEDDING_API_KEY: ${OPENAI_EMBEDDING_API_KEY:-sk-}
+      OPENAI_EMBEDDING_BASE_URL: ${OPENAI_EMBEDDING_BASE_URL}
+      MILVUS_URI: ${MILVUS_URI:-milvus:19530}
+      MILVUS_USER: ${MILVUS_USER:-admin}
+      MILVUS_PASSWORD: ${MILVUS_PASSWORD:-123456}
+      MYSQL_HOST: ${MYSQL_HOST:-mysql}
+      MYSQL_PORT: ${MYSQL_PORT:-3306}
+      MYSQL_DBNAME: ${MYSQL_DBNAME:-vanna}
+      MYSQL_USER: ${MYSQL_USER:-root}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-123456}
     command: python main.py
     ports:
       - 8080:8080

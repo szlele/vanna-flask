@@ -4,19 +4,19 @@ import pandas as pd
 def train_data(vs:VannaService):
         # 使用DDL（数据定义语言）训练
     ddl = """
-    CREATE TABLE customers (
-        customer_id INT PRIMARY KEY comment '客户唯一标识',
-        name VARCHAR(100) comment '客户姓名',
-        email VARCHAR(100) comment '客户邮箱',
-        signup_date DATE comment '客户注册日期'
+    CREATE TABLE IF NOT EXISTS customers (
+        `customer_id` INT(11) AUTO_INCREMENT PRIMARY KEY comment '客户唯一标识',
+        `name` VARCHAR(100) comment '客户姓名',
+        `email` VARCHAR(100) comment '客户邮箱',
+        `signup_date` DATE comment '客户注册日期'
     ) comment '客户表';
     
-    CREATE TABLE orders (
-        order_id INT PRIMARY KEY comment '订单唯一标识',
-        customer_id INT comment '关联客户表的外键',
-        order_date DATE comment '订单日期',
-        total_amount DECIMAL(10,2) comment '订单总金额',
-        FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
+    CREATE TABLE IF NOT EXISTS orders (
+        `order_id` INT(11) AUTO_INCREMENT PRIMARY KEY comment '订单唯一标识',
+        `customer_id` INT(11) comment '关联客户表的外键',
+        `order_date` DATE comment '订单日期',
+        `total_amount` DECIMAL(10,2) comment '订单总金额',
+        FOREIGN KEY (`customer_id`) REFERENCES customers(`customer_id`)
     ) comment '订单表';
     """
     res = vs.train(ddl=ddl)
@@ -56,7 +56,15 @@ def clear_data(vs:VannaService):
     for id in ids:
         vs.remove_training_data(id)
 
+def run_sql(vs:VannaService,sql:str):
+    res = vs.run_sql(sql)
+    print(res)
+
 if __name__ == "__main__":
     vs = VannaService()
-    train_data(vs)
-    clear_data(vs)
+    sql = """
+    select * from customers
+    """
+    run_sql(vs,sql)
+    # train_data(vs)
+    # clear_data(vs)
