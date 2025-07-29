@@ -1,30 +1,15 @@
-from dotenv import load_dotenv
-load_dotenv()
-
 from functools import wraps
 from flask import Flask, jsonify, Response, request, redirect, url_for
 import flask
-import os
 from cache import MemoryCache
+from core import VannaService
 
 app = Flask(__name__, static_url_path='')
 
 # SETUP
 cache = MemoryCache()
 
-# from vanna.local import LocalContext_OpenAI
-# vn = LocalContext_OpenAI()
-
-from vanna.remote import VannaDefault
-vn = VannaDefault(model=os.environ['VANNA_MODEL'], api_key=os.environ['VANNA_API_KEY'])
-
-vn.connect_to_snowflake(
-    account=os.environ['SNOWFLAKE_ACCOUNT'],
-    username=os.environ['SNOWFLAKE_USERNAME'],
-    password=os.environ['SNOWFLAKE_PASSWORD'],
-    database=os.environ['SNOWFLAKE_DATABASE'],
-    warehouse=os.environ['SNOWFLAKE_WAREHOUSE'],
-)
+vn = VannaService()
 
 # NO NEED TO CHANGE ANYTHING BELOW THIS LINE
 def requires_cache(fields):
@@ -210,4 +195,4 @@ def root():
     return app.send_static_file('index.html')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=8080)
