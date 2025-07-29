@@ -1,8 +1,8 @@
 # vanna-flask
 全部组件本地部署的vanna-flask
 
-- LLM服务：基于VLLM部署的Qwen3-8B模型服务
-- Embedding服务：基于VLLM部署的Qwen3-Embedding-8B模型服务
+- LLM服务：支持遵循OpenAI标准的接口服务
+- Embedding服务：支持遵循OpenAI标准的接口服务
 - 数据库服务：基于MySQL数据库服务
 - 向量数据库服务：基于Milvus向量数据库服务
 
