@@ -67,9 +67,9 @@ services:
       - 3306:3306
     command: --max-connections=100
 
-  app:
+  vanna-flask:
     build: .
-    container_name: vanna-flask-server
+    container_name: vanna-flask-app
     restart: always
     environment:
       OPENAI_LLM_MODEL: ${OPENAI_LLM_MODEL}
