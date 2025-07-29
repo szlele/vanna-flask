@@ -8,7 +8,8 @@
 
 ## 安装使用
 
-### 配置`.env`
+### 配置环境变量
+复制`.env.example`为`.env`
 ```
 # LLM模型配置
 OPENAI_LLM_MODEL=
