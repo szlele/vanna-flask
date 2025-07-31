@@ -1,6 +1,9 @@
+from dotenv import load_dotenv
+load_dotenv()
 from functools import wraps
 from flask import Flask, jsonify, Response, request, redirect, url_for
 import flask
+import os
 from cache import MemoryCache
 from core import VannaService
 
@@ -9,7 +12,24 @@ app = Flask(__name__, static_url_path='')
 # SETUP
 cache = MemoryCache()
 
-vn = VannaService()
+config = {
+    "OPENAI_LLM_API_KEY": os.getenv("OPENAI_LLM_API_KEY"),
+    "OPENAI_LLM_BASE_URL": os.getenv("OPENAI_LLM_BASE_URL"),
+    "OPENAI_LLM_MODEL": os.getenv("OPENAI_LLM_MODEL"),
+    "OPENAI_EMBEDDING_API_KEY": os.getenv("OPENAI_EMBEDDING_API_KEY"),
+    "OPENAI_EMBEDDING_BASE_URL": os.getenv("OPENAI_EMBEDDING_BASE_URL"),
+    "OPENAI_EMBEDDING_MODEL": os.getenv("OPENAI_EMBEDDING_MODEL"),
+    "MILVUS_URI": os.getenv("MILVUS_URI"),
+    "MILVUS_USER": os.getenv("MILVUS_USER"),
+    "MILVUS_PASSWORD": os.getenv("MILVUS_PASSWORD"),
+    "MYSQL_HOST": os.getenv("MYSQL_HOST"),
+    "MYSQL_PORT": os.getenv("MYSQL_PORT"),
+    "MYSQL_DBNAME": os.getenv("MYSQL_DBNAME"),
+    "MYSQL_USER": os.getenv("MYSQL_USER"),
+    "MYSQL_PASSWORD": os.getenv("MYSQL_PASSWORD"),
+}
+
+vn = VannaService(config)
 
 # NO NEED TO CHANGE ANYTHING BELOW THIS LINE
 def requires_cache(fields):

@@ -2,4 +2,4 @@ flask
 vanna[milvus,openai,mysql]
 db-dtypes
 python-dotenv
-cryptography>=45.0.5
+cryptography
