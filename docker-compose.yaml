@@ -67,7 +67,7 @@ services:
       - 3306:3306
     command: --max-connections=100
 
-  vanna:
+  vanna-flask-app:
     build: .
     image: vanna-flask-app
     container_name: vanna-flask-app

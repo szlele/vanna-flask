@@ -9,7 +9,8 @@
 ## 安装使用
 
 ### 配置环境变量
-复制`.env.example`为`.env`
+复制`.env.example`为`.env`,并根据实际情况修改环境变量配置。如果全部使用本地服务，只需要配置LLM模型相关的环境变量即可。
+
 ```
 # LLM模型配置
 OPENAI_LLM_MODEL=
@@ -35,8 +36,11 @@ MYSQL_PASSWORD=123456
 ```
 
 ### 启动服务
+1. 如果全部使用本地服务，直接执行`docker compose up -d`即可
+2. 如果向量数据库和关系型数据库需要使用外部服务,只需要启动`vanna-flask-app`服务即可
 ```
-docker compose up -d
+docker build -t vanna-flask-app .
+docker run --restart always -n vanna-flask-app -dp 8080:8080 --env-file .env vanna-flask-app python main.py
 ```
 
 ### 访问服务
